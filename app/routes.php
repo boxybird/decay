@@ -6,6 +6,7 @@ use Rosebud\DataTransferObjects\Movies\MovieDetailsData;
 Flight::route('/', function () {
     $movie_id = (int) $_GET['movie_id'] ??= 23389;
     $member_id = (int) $_GET['member_id'] ??= false;
+    $has_member_id = (bool) $_GET['member_id'] ??= false;
 
     $db = Flight::db();
 
@@ -23,8 +24,6 @@ Flight::route('/', function () {
     $members = array_filter($single_movie->credits->cast, fn($member) => $member->computed->profile_paths);
     $members = array_slice($members, 0, 4);
     $members = array_filter($members, fn($member) => $member->id !== $member_id);
-
-    $has_member_id = (bool) $_GET['member_id'] ??= false;
 
     Flight::render('index', [
         'single_movie' => $single_movie,
