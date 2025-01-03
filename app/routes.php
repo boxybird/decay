@@ -6,8 +6,8 @@ use Rosebud\DataTransferObjects\Movies\MovieDetailsData;
 Flight::route('/', function () {
     $movie_id = (int) $_GET['movie_id'] ??= 23389;
     $member_id = (int) $_GET['member_id'] ??= false;
-    $has_member_id = (bool) $_GET['member_id'] ??= false;
-
+    $has_member_id = (bool) $member_id ??= false;
+    
     $db = Flight::db();
 
     $single_movie = $db->findOneBy(['data.id', '=', $movie_id])['data'] ?? null;
