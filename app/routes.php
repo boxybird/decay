@@ -13,6 +13,11 @@ Flight::route('/', function () {
     $db_person = Flight::personStore();
 
     $movie_single = $db_movie->findOneBy(['data.id', '=', $movie_id])['data'] ?? null;
+
+    if (!$movie_single) {
+        return Flight::response()->status(404);
+    }
+
     $movie_single = MovieDetailsData::fromArray($movie_single);
 
     $movies = array_map(fn($movie) => MovieData::fromArray($movie['data']), $db_movie->findAll());
@@ -30,10 +35,10 @@ Flight::route('/', function () {
     $members = array_filter($members, fn($member) => $member->id !== $member_id);
 
     $details = [];
-    $details['type'] = $has_member_id ? 'member' : 'movie';
-    $details['featured_image'] = $has_member_id ? $member->computed->profile_paths['w500'] : $movie_single->computed->poster_paths['w500'];
-    $details['featured_image_alt'] = $has_member_id ? "{$member_single?->name} image" : "{$movie_single->title} poster";
-    $details['description'] = $has_member_id ? $member_single->biography ?? null : $movie_single->overview;
+    $details['type'] = $member?->id ? 'member' : 'movie';
+    $details['featured_image'] = $member?->id ? $member->computed->profile_paths['w500'] : $movie_single->computed->poster_paths['w500'];
+    $details['featured_image_alt'] = $member?->id ? "{$member_single?->name} image" : "{$movie_single->title} poster";
+    $details['description'] = $member?->id ? $member_single->biography ?? null : $movie_single->overview;
 
     Flight::render('index', [
         'movie_single' => $movie_single,
