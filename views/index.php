@@ -36,7 +36,7 @@
                             <h3 class="text-xl">
                                 <span><?= $member->name ?></span>
                                 <?php if ($member->character): ?>
-                                    <span class="text-slate-400">(<?= $member->character ?>)</span>
+                                    <span class="text-slate-400">[<?= $member->character ?>]</span>
                                 <?php endif ?>
                             </h3>
                         </div>
