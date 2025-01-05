@@ -42,7 +42,7 @@
     <body
         hx-boost="true"
         hx-swap="transition:true show:none"
-        class="antialiased bg-slate-950 bg-center bg-repeat font-mono text-slate-300"
+        class="antialiased bg-slate-950 bg-center bg-repeat font-mono max-w-[125rem] mx-auto text-slate-300"
         style="background-image: url(/assets/dots.svg)"
     >
         <main class="p-8 pb-16 lg:p-0">
