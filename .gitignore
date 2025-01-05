@@ -1,4 +1,5 @@
 .idea
 vendor
 
-database/movies/cache
+database/movie/cache
+database/person/cache
