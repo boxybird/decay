@@ -20,7 +20,7 @@
             <article class="gap-8 flex flex-col flex-col-reverse items-center max-w-lg mx-auto lg:gap-10 lg:flex-row lg:max-w-4xl xl:max-w-5xl">
                 <img
                     style="view-transition-name: image-<?= $has_member_id ? $member->id : $single_movie->id ?>"
-                    class="h-full rounded-md lg:w-2/5"
+                    class="h-full rounded-md shrink-0 lg:w-2/5"
                     src="<?= $has_member_id ? $member->computed->profile_paths['w500'] : $single_movie->computed->poster_paths['w500'] ?>"
                     alt="<?= $single_movie->title ?> poster"
                 >
