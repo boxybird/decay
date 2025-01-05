@@ -3,7 +3,7 @@
         <?php foreach ($movies as $movie): ?>
             <li>
                 <a
-                    class="h-full inline-flex object-cover w-24 lg:w-full [&.htmx-request]:animate-pulse"
+                    class="duration-150 h-full inline-flex object-cover w-24 [&.htmx-request]:animate-pulse hover:scale-105 lg:w-full"
                     href="/?movie_id=<?= $movie->id ?>">
                     <img
                         style="<?= ($movie->id !== $single_movie->id) ? 'view-transition-name: image-'.$movie->id : '' ?>"
@@ -62,7 +62,7 @@
                                 <?php foreach ($members as $index => $member): ?>
                                     <li>
                                         <a
-                                            class="[&.htmx-request]:animate-pulse"
+                                            class="duration-150 inline-flex hover:scale-105 [&.htmx-request]:animate-pulse"
                                             href="/?movie_id=<?= $single_movie->id ?>&member_id=<?= $member->id ?>">
                                             <img
                                                 style="view-transition-name: image-<?= $member->id ?>"
@@ -76,7 +76,7 @@
                                         <a href="/?movie_id=<?= $single_movie->id ?>">
                                             <img
                                                 style="<?= $movie->id !== $single_movie->id ? 'view-transition-name: image-'.$single_movie->id : '' ?>"
-                                                class="rounded"
+                                                class="duration-150 inline-flex rounded hover:scale-105"
                                                 src="<?= $single_movie->computed->poster_paths['w500'] ?>"
                                                 alt="<?= $single_movie->title ?> poster"
                                             >
