@@ -19,7 +19,7 @@
         <div class="grid place-items-center sticky top-0 lg:h-dvh lg:pr-12">
             <article class="gap-8 flex flex-col flex-col-reverse items-center max-w-lg mx-auto lg:gap-10 lg:flex-row lg:max-w-4xl xl:max-w-5xl">
                 <img
-                    style="view-transition-name: image-<?= $has_member_id ? $member->id : $movie_single->id ?>"
+                    style="view-transition-name: image-<?= $member?->id ? $member->id : $movie_single->id ?>"
                     class="h-full rounded-md shrink-0 lg:w-2/5"
                     src="<?= $details['featured_image'] ?>"
                     alt="<?= $details['featured_image_alt'] ?>"
@@ -28,7 +28,7 @@
                     <h2 class="max-w-sm text-4xl">
                         <?= $movie_single->title ?>
                     </h2>
-                    <?php if ($has_member_id): ?>
+                    <?php if ($member?->id): ?>
                         <div class="gap-2 inline-flex mt-8">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-[3px] -rotate-90 shrink-0 size-6 lg:rotate-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
