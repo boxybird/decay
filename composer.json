@@ -5,9 +5,13 @@
     }
   },
   "require": {
+    "php": "^8.2",
     "flightphp/core": "^3.13",
     "illuminate/http": "^11.36",
     "rakibtg/sleekdb": "^2.15",
     "boxybird/rosebud": "dev-master"
+  },
+  "require-dev": {
+    "rector/rector": "^2.0"
   }
 }
