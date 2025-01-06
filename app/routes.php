@@ -6,7 +6,7 @@ use Rosebud\DataTransferObjects\People\PersonDetailsData;
 
 Flight::route('/', function () {
     $movie_id = (int) Flight::request()->query->movie_id ??= 23389;
-    $member_id = (int) Flight::request()->query->member_id ??= false;
+    $member_id = (int) Flight::request()->query->member_id ??= 0;
     $has_member_id = (bool) $member_id ??= false;
 
     $db_movie = Flight::movieStore();
@@ -20,19 +20,19 @@ Flight::route('/', function () {
 
     $movie_single = MovieDetailsData::fromArray($movie_single);
 
-    $movies = array_map(fn($movie) => MovieData::fromArray($movie['data']), $db_movie->findAll());
-    $movies = array_filter($movies, fn($movie) => $movie->id !== $movie_single->id);
-    $movies = array_filter($movies, fn($movie) => $movie->computed->poster_paths);
+    $movies = array_map(fn($movie): MovieData => MovieData::fromArray($movie['data']), $db_movie->findAll());
+    $movies = array_filter($movies, fn($movie): bool => $movie->id !== $movie_single->id);
+    $movies = array_filter($movies, fn($movie): array => $movie->computed->poster_paths);
 
-    $member = array_filter($movie_single->credits->cast, fn($member) => $member->id == $member_id) ?? null;
-    $member = $member ? array_values($member)[0] : null;
+    $member = array_filter($movie_single->credits->cast, fn($member): bool => $member->id === $member_id) ?? null;
+    $member = !empty($member) ? array_values($member)[0] : null;
 
     $member_single = $member ? $db_person->findOneBy(['id', '=', $member->id]) : null;
     $member_single = $member_single ? PersonDetailsData::fromArray($member_single) : null;
 
-    $members = array_filter($movie_single->credits->cast, fn($member) => $member->computed->profile_paths);
+    $members = array_filter($movie_single->credits->cast, fn($member): array => $member->computed->profile_paths);
     $members = array_slice($members, 0, 4);
-    $members = array_filter($members, fn($member) => $member->id !== $member_id);
+    $members = array_filter($members, fn($member): bool => $member->id !== $member_id);
 
     $details = [];
     $details['type'] = $member?->id ? 'member' : 'movie';

@@ -12,7 +12,7 @@ abstract class Database
 
     public function __construct()
     {
-        $class_name = get_called_class();
+        $class_name = static::class;
         $class_name = explode('\\', $class_name);
 
         $store_name = strtolower(end($class_name));
