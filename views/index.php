@@ -61,7 +61,7 @@
                     <div class="flex flex-col flex-col-reverse lg:flex-col">
                         <?php if ($members): ?>
                             <ul class="gap-4 grid grid-cols-4 max-w-sm mt-8">
-                                <?php foreach ($members as $index => $member): ?>
+                                <?php foreach ($members as $member): ?>
                                     <li>
                                         <a
                                             class="duration-150 inline-flex hover:scale-105 [&.htmx-request]:animate-pulse"
