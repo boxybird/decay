@@ -5,14 +5,14 @@ use Rosebud\DataTransferObjects\Movies\MovieDetailsData;
 use Rosebud\DataTransferObjects\People\PersonDetailsData;
 
 Flight::route('/', function () {
-    $movie_id = (int) Flight::request()->query->movie_id ??= 23389;
+    $movie_single_id = (int) Flight::request()->query->movie_id ??= 23389;
     $member_id = (int) Flight::request()->query->member_id ??= 0;
     $has_member_id = (bool) $member_id ??= false;
 
     $db_movie = Flight::movieStore();
     $db_person = Flight::personStore();
 
-    $movie_single = $db_movie->findOneBy(['data.id', '=', $movie_id])['data'] ?? null;
+    $movie_single = $db_movie->findOneBy(['data.id', '=', $movie_single_id])['data'] ?? null;
 
     if (!$movie_single) {
         return Flight::response()->status(404);
@@ -21,7 +21,7 @@ Flight::route('/', function () {
     $movie_single = MovieDetailsData::fromArray($movie_single);
 
     $movies = array_map(fn($movie): MovieData => MovieData::fromArray($movie['data']), $db_movie->findAll());
-    $movies = array_filter($movies, fn($movie): bool => $movie->id !== $movie_single->id);
+//    $movies = array_filter($movies, fn($movie): bool => $movie->id !== $movie_single->id);
     $movies = array_filter($movies, fn($movie): array => $movie->computed->poster_paths);
 
     $member = array_filter($movie_single->credits->cast, fn($member): bool => $member->id === $member_id) ?? null;
@@ -41,6 +41,7 @@ Flight::route('/', function () {
     $details['description'] = $member?->id ? $member_single->biography ?? null : $movie_single->overview;
 
     Flight::render('index', [
+        'movie_single_id' => $movie_single_id,
         'movie_single' => $movie_single,
         'movies' => $movies,
         'member' => $member,
