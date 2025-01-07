@@ -20,7 +20,7 @@ Flight::route('/', function () {
 
     $movie_single = MovieDetailsData::fromArray($movie_single);
 
-    $movies = array_map(fn($movie): MovieData => MovieData::fromArray($movie['data']), $db_movie->findAll());
+    $movies = array_map(fn($movie): MovieData => MovieData::fromArray($movie['data']), $db_movie->findAll(orderBy: ['id' => 'desc'], limit: 30));
 //    $movies = array_filter($movies, fn($movie): bool => $movie->id !== $movie_single->id);
     $movies = array_filter($movies, fn($movie): array => $movie->computed->poster_paths);
 
