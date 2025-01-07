@@ -4,6 +4,11 @@
       "App\\": "app/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "require": {
     "php": "^8.2",
     "flightphp/core": "^3.13",
@@ -12,6 +17,12 @@
     "boxybird/rosebud": "dev-master"
   },
   "require-dev": {
-    "rector/rector": "^2.0"
+    "rector/rector": "^2.0",
+    "pestphp/pest": "^3.7"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   }
 }
