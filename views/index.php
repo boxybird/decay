@@ -3,8 +3,9 @@
         <?php foreach ($movies as $movie): ?>
             <li>
                 <a
-                    class="duration-150 h-full inline-flex object-cover w-24 [&.htmx-request]:animate-pulse hover:scale-105 lg:w-full"
-                    href="/?movie_id=<?= $movie->id ?>">
+                    class="<?= $movie_single_id === $movie->id ? 'opacity-50 pointer-events-none scale-75' : '' ?> duration-150 h-full inline-flex object-cover w-24 [&.htmx-request]:animate-pulse hover:scale-105 lg:w-full"
+                    href="/?movie_id=<?= $movie->id ?>"
+                    id="movie-id-<?= $movie->id ?>">
                     <img
                         style="<?= ($movie->id !== $movie_single->id) ? 'view-transition-name: image-'.$movie->id : '' ?>"
                         class="rounded"
