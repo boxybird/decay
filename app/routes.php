@@ -8,6 +8,7 @@ Flight::route('/', function () {
     $movie_single_id = (int) Flight::request()->query->movie_id ??= 23389;
     $member_id = (int) Flight::request()->query->member_id ??= 0;
     $has_member_id = (bool) $member_id ??= false;
+    $showing_trailer = (bool) Flight::request()->query->showing_trailer ??= false;
 
     $db_movie = Flight::movieStore();
     $db_person = Flight::personStore();
@@ -19,9 +20,10 @@ Flight::route('/', function () {
     }
 
     $movie_single = MovieDetailsData::fromArray($movie_single);
+    $movie_single_video = array_filter($movie_single->videos->results, fn($video): bool => $video->site === 'YouTube')[0] ?? null;
+    $movie_single_video = $movie_single_video ? "https://www.youtube.com/embed/{$movie_single_video->key}" : null;
 
     $movies = array_map(fn($movie): MovieData => MovieData::fromArray($movie['data']), $db_movie->findAll(orderBy: ['id' => 'desc'], limit: 30));
-//    $movies = array_filter($movies, fn($movie): bool => $movie->id !== $movie_single->id);
     $movies = array_filter($movies, fn($movie): array => $movie->computed->poster_paths);
 
     $member = array_filter($movie_single->credits->cast, fn($member): bool => $member->id === $member_id) ?? null;
@@ -43,11 +45,13 @@ Flight::route('/', function () {
     Flight::render('index', [
         'movie_single_id' => $movie_single_id,
         'movie_single' => $movie_single,
+        'movie_single_video' => $movie_single_video,
         'movies' => $movies,
         'member' => $member,
         'member_single' => $member_single,
         'members' => $members,
         'has_member_id' => $has_member_id,
+        'showing_trailer' => $showing_trailer,
         'details' => $details,
     ], 'content');
 
