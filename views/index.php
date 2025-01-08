@@ -19,17 +19,27 @@
     <div>
         <div class="grid place-content-center place-items-center sticky top-0 lg:h-dvh lg:pr-12">
             <?php if ($showing_trailer): ?>
-                <div
-                    style="view-transition-name: image-<?= $movie_single->id ?>"
-                    class="aspect-video max-w-3xl mb-8 w-full">
-                    <iframe
-                            class="w-full h-full"
-                            src="<?= $movie_single_video ?>"
-                            title="<?= $movie_single->title ?> trailer"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                    ></iframe>
-                </div>
+                <?php if ($movie_single_video): ?>
+                    <div
+                        style="view-transition-name: image-<?= $movie_single->id ?>"
+                        class="aspect-video max-w-3xl mb-8 w-full">
+                        <iframe
+                                class="w-full h-full"
+                                src="<?= $movie_single_video ?>"
+                                title="<?= $movie_single->title ?> trailer"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                        ></iframe>
+                    </div>
+                <?php else: ?>
+                    <div
+                        style="view-transition-name: image-<?= $movie_single->id ?>"
+                        class="max-w-3xl mb-32 w-full">
+                        <h2 class="text-4xl">
+                            No trailer available for this movie.
+                        </h2>
+                    </div>
+                <?php endif ?>
             <?php endif ?>
             <article class="gap-8 flex flex-col flex-col-reverse items-center max-w-lg mx-auto lg:gap-10 lg:flex-row lg:max-w-4xl xl:max-w-5xl">
                 <?php if (!$showing_trailer): ?>
